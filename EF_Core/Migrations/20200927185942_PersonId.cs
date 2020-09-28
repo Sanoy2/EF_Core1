@@ -4,6 +4,13 @@ namespace EF_Core.Migrations
 {
     public partial class PersonId : Migration
     {
+        private string personalIdNumber;
+
+        public PersonId(string personalIdNumber)
+        {
+            this.personalIdNumber = personalIdNumber;
+        }
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(

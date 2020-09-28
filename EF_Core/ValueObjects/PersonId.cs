@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EF_Core
+namespace EF_Core.ValueObjects
 {
     public class PersonId
     {
