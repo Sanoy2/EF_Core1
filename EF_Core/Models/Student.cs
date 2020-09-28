@@ -9,11 +9,16 @@ namespace EF_Core.Models
     {
         public int Id { get; }
         public string Name { get; set; }
-        public PersonId PersonalIdNumber { get; }
+        public PersonId PersonalIdNumber { get; private set; }
 
         protected Student()
         {
 
+        }
+
+        public void UpdatePersonId(PersonId personId)
+        {
+            this.PersonalIdNumber = personId;
         }
 
         public Student(string name, string personalIdNumber)
