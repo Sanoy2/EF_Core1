@@ -1,4 +1,5 @@
 ﻿using EF_Core.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
@@ -13,6 +14,7 @@ namespace EF_Core
                 if(context.Students.Any() == false)
                 {
                     Student student = new Student("John Doe", "18291828");
+                    student.AddCard(Guid.NewGuid().ToString().Substring(0, 6));
                     context.Students.Add(student);
                     context.SaveChanges();
                 }
@@ -32,7 +34,7 @@ namespace EF_Core
 
         private static void Print(SchoolContext schoolContext)
         {
-            foreach (var student in schoolContext.Students)
+            foreach (var student in schoolContext.Students.Include(x => x.Cards))
             {
                 Console.WriteLine(student.ToString());
             }

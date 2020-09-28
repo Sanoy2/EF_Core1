@@ -4,14 +4,16 @@ using EF_Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EF_Core.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    partial class SchoolContextModelSnapshot : ModelSnapshot
+    [Migration("20200928182303_StudentCard")]
+    partial class StudentCard
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,9 +61,14 @@ namespace EF_Core.Migrations
                     b.Property<int?>("StudentId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("StudentId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Number");
 
                     b.HasIndex("StudentId");
+
+                    b.HasIndex("StudentId1");
 
                     b.ToTable("StudentCards");
                 });
@@ -93,6 +100,10 @@ namespace EF_Core.Migrations
                     b.HasOne("EF_Core.Models.Student", null)
                         .WithMany("Cards")
                         .HasForeignKey("StudentId");
+
+                    b.HasOne("EF_Core.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId1");
                 });
 #pragma warning restore 612, 618
         }

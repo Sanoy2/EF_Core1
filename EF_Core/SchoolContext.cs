@@ -11,6 +11,7 @@ namespace EF_Core
     {
         public DbSet<Student> Students { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<StudentCard> StudentCards { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -21,7 +22,11 @@ namespace EF_Core
         {
             modelBuilder.Entity<Student>().HasKey(x => x.Id);
             modelBuilder.Entity<Student>().OwnsOne(x => x.PersonalIdNumber).Property(x => x.Value).HasColumnName(nameof(PersonId));
+            modelBuilder.Entity<Student>().HasMany(x => x.Cards);
             modelBuilder.Entity<Course>().HasKey(x => x.Id);
+
+            modelBuilder.Entity<StudentCard>().HasKey(x => x.Number);
+            modelBuilder.Entity<StudentCard>().Property(x => x.Created).HasDefaultValueSql("GETDATE()");
         }
     }
 }
