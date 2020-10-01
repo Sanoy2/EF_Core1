@@ -9,15 +9,18 @@ namespace EF_Core.Models
     public class Student : Entity
     {
         private IList<StudentCard> cards;
+        private IList<CourseParticipation> participations;
 
         public int Id { get; }
         public string Name { get; set; }
         public PersonId PersonalIdNumber { get; private set; }
         public IEnumerable<StudentCard> Cards => this.cards;
+        public IEnumerable<CourseParticipation> Participations => this.participations;
 
         protected Student()
         {
             this.cards = new List<StudentCard>();
+            this.participations = new List<CourseParticipation>(); ;
         }
 
         public void UpdatePersonId(PersonId personId)
@@ -26,9 +29,8 @@ namespace EF_Core.Models
             this.PersonalIdNumber = personId;
         }
 
-        public Student(string name, string personalIdNumber)
+        public Student(string name, string personalIdNumber) : this()
         {
-            this.cards = new List<StudentCard>();
             this.Name = name;
             this.PersonalIdNumber = new PersonId(personalIdNumber);
         }
@@ -37,6 +39,11 @@ namespace EF_Core.Models
         {
             StudentCard card = new StudentCard(this, cardNumber);
             this.cards.Add(card);
+        }
+
+        public void AddParticipation(CourseParticipation participation)
+        {
+            this.participations.Add(participation);
         }
 
         public override string ToString()

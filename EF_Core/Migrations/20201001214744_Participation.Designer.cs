@@ -4,14 +4,16 @@ using EF_Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EF_Core.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    partial class SchoolContextModelSnapshot : ModelSnapshot
+    [Migration("20201001214744_Participation")]
+    partial class Participation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,9 +27,6 @@ namespace EF_Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CourseName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -44,14 +43,24 @@ namespace EF_Core.Migrations
                     b.Property<int?>("CourseId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CourseId1")
+                        .HasColumnType("int");
+
                     b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StudentId1")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
 
+                    b.HasIndex("CourseId1");
+
                     b.HasIndex("StudentId");
+
+                    b.HasIndex("StudentId1");
 
                     b.ToTable("CourseParticipation");
                 });
@@ -97,9 +106,17 @@ namespace EF_Core.Migrations
                         .WithMany("Parcipitations")
                         .HasForeignKey("CourseId");
 
+                    b.HasOne("EF_Core.Models.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId1");
+
                     b.HasOne("EF_Core.Models.Student", null)
                         .WithMany("Participations")
                         .HasForeignKey("StudentId");
+
+                    b.HasOne("EF_Core.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId1");
                 });
 
             modelBuilder.Entity("EF_Core.Models.Student", b =>

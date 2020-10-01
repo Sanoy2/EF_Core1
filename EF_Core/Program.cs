@@ -1,4 +1,5 @@
 ﻿using EF_Core.Models;
+using EF_Core.Repos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -11,24 +12,21 @@ namespace EF_Core
         {
             using (var context = new SchoolContext())
             {
-                if(context.Students.Any() == false)
+                IStudentRepo studentRepo = new StudentRepo(context);
+                ICourseRepo courseRepo = new CourseRepo(context);
+                using(IUoW uow = new UoW(context, studentRepo, courseRepo))
                 {
-                    Student student = new Student("John Doe", "18291828");
-                    student.AddCard(Guid.NewGuid().ToString().Substring(0, 6));
-                    context.Students.Add(student);
-                    context.SaveChanges();
-                }
-                else
-                {
-                    Student student = context.Students.First();
-                    student.UpdatePersonId(new ValueObjects.PersonId(Guid.NewGuid().ToString().Substring(0, 10)));
+                    var s = uow.StudentRepo.Get(6);
+                    Console.WriteLine(s.ToString());
+                    Course course = new Course("How to basic");
+                    uow.CourseRepo.Add(course);
+                    var participation = new CourseParticipation(s, course);
+                    s.AddParticipation(participation);
+                    course.AddParticipation(participation);
+                    //uow.Commit();
 
-                    context.SaveChanges();
+                    Print(context);
                 }
-
-                
-                Print(context);
-                
             }
         }
 

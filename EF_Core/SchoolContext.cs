@@ -23,10 +23,19 @@ namespace EF_Core
             modelBuilder.Entity<Student>().HasKey(x => x.Id);
             modelBuilder.Entity<Student>().OwnsOne(x => x.PersonalIdNumber).Property(x => x.Value).HasColumnName(nameof(PersonId));
             modelBuilder.Entity<Student>().HasMany(x => x.Cards);
+            modelBuilder.Entity<Student>().HasMany(x => x.Participations);
+
             modelBuilder.Entity<Course>().HasKey(x => x.Id);
+            modelBuilder.Entity<Course>().HasMany(x => x.Parcipitations);
+            modelBuilder.Entity<Course>().Property(x => x.CourseName);
 
             modelBuilder.Entity<StudentCard>().HasKey(x => x.Number);
             modelBuilder.Entity<StudentCard>().Property(x => x.Created).HasDefaultValueSql("GETDATE()");
+
+            modelBuilder.Entity<CourseParticipation>().HasKey(x => x.Id);
+            //modelBuilder.Entity<CourseParticipation>().HasOne(x => x.Student);
+            //modelBuilder.Entity<CourseParticipation>().HasOne(x => x.Course);
+
         }
     }
 }
