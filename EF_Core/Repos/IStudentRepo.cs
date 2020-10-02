@@ -13,5 +13,7 @@ namespace EF_Core.Repos
         IQueryable<Student> Get();
 
         Student Get(int studentId);
+
+        void PrintStudents();
     }
 }

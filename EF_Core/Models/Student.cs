@@ -14,7 +14,7 @@ namespace EF_Core.Models
         public int Id { get; }
         public string Name { get; set; }
         public PersonId PersonalIdNumber { get; private set; }
-        public IEnumerable<StudentCard> Cards => this.cards;
+        public IEnumerable<StudentCard> Cards => this.cards.OrderByDescending(x => x.Created);
         public IEnumerable<CourseParticipation> Participations => this.participations;
 
         protected Student()
@@ -54,7 +54,7 @@ namespace EF_Core.Models
             
             builder.AppendLine(basicData);
 
-            foreach (var item in this.Cards.OrderBy(x => x.Created))
+            foreach (var item in this.Cards)
             {
                 builder.AppendLine(item.ToString());
             }

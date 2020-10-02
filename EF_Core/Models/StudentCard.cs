@@ -16,11 +16,12 @@ namespace EF_Core.Models
         {
             this.Student = student;
             this.Number = number;
+            this.Created = DateTime.Now;
         }
 
         public override string ToString()
         {
-            return $"Card: {this.Number}";
+            return $"Card: {this.Number}, Created: {this.Created}";
         }
     }
 }

@@ -32,5 +32,13 @@ namespace EF_Core.Repos
                 .Include(x => x.Participations)
                 .FirstOrDefault(x => x.Id == studentId);
         }
+
+        public void PrintStudents()
+        {
+            foreach (var student in this.Get())
+            {
+                Console.WriteLine(student.ToString());
+            }
+        }
     }
 }
